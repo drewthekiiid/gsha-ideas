@@ -24,19 +24,6 @@ jobs:
 
       - name: Build Next.js application
         run: npm run build # Changed from pnpm run build
-        env:
-          # If you have any build-time environment variables, add them here
-          # NEXT_PUBLIC_EXAMPLE_VARIABLE: ${{ secrets.EXAMPLE_VARIABLE }}
-          # The basePath and assetPrefix are already set in next.config.mjs
-          # So, no need to set them as env vars here for the build itself
-          # unless your build process specifically requires them as env vars.
-          # For GitHub Pages, the `next export` command handles paths correctly
-          # based on `basePath` and `assetPrefix` in `next.config.mjs`.
-          # However, if your custom domain setup requires specific env vars during build,
-          # you might need to add them. For a standard GitHub Pages repo deployment,
-          # the next.config.mjs settings are usually sufficient.
-          # For custom domain, ensure your CNAME file is handled correctly or
-          # configure the custom domain in GitHub Pages settings.
 
       - name: Add .nojekyll file
         run: touch ./out/.nojekyll # Prevents GitHub Pages from running Jekyll
