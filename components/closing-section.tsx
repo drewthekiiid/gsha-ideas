@@ -5,11 +5,10 @@ import YourLogo from "./your-logo"
 import MosaicLogo from "./mosaic-logo"
 import { Button } from "@/components/ui/button"
 import { Mail, Linkedin, Phone } from "lucide-react"
-import { useContext } from "react"
-import { AppContext } from "@/context/app-context"
+import { useAppContext } from "@/context/app-context"
 
 export default function ClosingSection() {
-  const { prefersReducedMotion } = useContext(AppContext)
+  const { prefersReducedMotion } = useAppContext()
 
   const containerVariants = {
     hidden: { opacity: 0 },
