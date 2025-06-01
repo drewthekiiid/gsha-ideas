@@ -24,7 +24,7 @@ const logoVariants = {
   visible: (custom: number) => ({
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.7, delay: custom * 0.2 + 0.5, ease: "circOut" },
+    transition: { duration: 0.4, delay: custom * 0.1 + 0.2, ease: "circOut" },
   }),
 }
 
@@ -37,15 +37,15 @@ const SEARCH_PHRASES = [
 ]
 
 // Reduced pause time between phrases
-const PHRASE_DISPLAY_TIME = 600 // Milliseconds to pause after a phrase is typed
+const PHRASE_DISPLAY_TIME = 200 // Milliseconds to pause after a phrase is typed
 
 const headlineVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      delayChildren: 0.2,
-      staggerChildren: 0.04,
+      delayChildren: 0.1,
+      staggerChildren: 0.02,
     },
   },
 }
@@ -56,7 +56,7 @@ const headlineCharVariants = {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.5, ease: "circOut" },
+    transition: { duration: 0.3, ease: "circOut" },
   },
 }
 
@@ -122,11 +122,11 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
     }
 
     const sequence = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 300))
+      await new Promise((resolve) => setTimeout(resolve, 100))
       setShowLogos(true)
       playSound("logoReveal")
 
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      await new Promise((resolve) => setTimeout(resolve, 400))
       setShowSearchBar(true)
       playSound("searchBarAppear")
     }
@@ -154,7 +154,7 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
       const showHeadlineTimer = setTimeout(() => {
         setShowHeadline(true)
         playSound("headlineBuild")
-      }, 300)
+      }, 100)
       return () => clearTimeout(showHeadlineTimer)
     }
   }, [firstPhraseTyped, showHeadline, prefersReducedMotion, playSound])
@@ -166,15 +166,15 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
       const burnTimer = setTimeout(() => {
         setAnimateHeadlineBurn(true)
         playSound("headlineBurn")
-      }, 300) // Start burn effect
+      }, 100) // Start burn effect
 
       const finalIgniteTimer = setTimeout(() => {
         playSound("finalIgnite", 0.7)
-      }, 500) // Slightly after burn starts
+      }, 200) // Slightly after burn starts
 
       const fadeOutTimer = setTimeout(() => {
         setShowOverlay(false)
-      }, 1200) // Shortened overall exit time, ensure burn animation completes
+      }, 600) // Shortened overall exit time, ensure burn animation completes
 
       return () => {
         clearTimeout(burnTimer)
