@@ -9,7 +9,7 @@ interface YourLogoProps {
 
 export default function YourLogo({ className, width = 150, height = 50 }: YourLogoProps) {
   // Use the actual Drew Dean logo
-  const logoSrc = "/Drew Dean Logo White.png"
+  const logoSrc = "/drew-dean-logo-white.png"
 
   return (
     <div className={cn("relative", className)}>

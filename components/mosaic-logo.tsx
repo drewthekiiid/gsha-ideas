@@ -9,7 +9,7 @@ interface MosaicLogoProps {
 
 export default function MosaicLogo({ className, width = 150, height = 50 }: MosaicLogoProps) {
   // Use the actual Mosaic logo file
-  const logoSrc = "/270f5f84-b6e6-4997-9a24-7b28d55b9fdf.png"
+  const logoSrc = "/mosaic-logo.png"
 
   return (
     <div className={cn("relative", className)}>
