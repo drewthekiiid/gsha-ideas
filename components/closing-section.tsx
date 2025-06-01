@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import YourLogo from "./your-logo"
 import MosaicLogo from "./mosaic-logo"
 import { Button } from "@/components/ui/button"
-import { ArrowUpRight, Mail, Linkedin, Twitter } from "lucide-react"
+import { Mail, Linkedin, Phone } from "lucide-react"
 import { useContext } from "react"
 import { AppContext } from "@/context/app-context"
 
@@ -69,12 +69,12 @@ export default function ClosingSection() {
           className="text-4xl md:text-6xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-ignite-yellow via-ignite-orange to-ignite-red"
           variants={itemVariants}
         >
-          Let&apos;s Ignite the Future.
+          Let&apos;s Ignite GSHA 2025
         </motion.h2>
 
         <motion.p className="text-lg md:text-xl max-w-2xl text-neutral-300" variants={itemVariants}>
-          Thank you for exploring the GSHA 2025 vision. We&apos;re excited about the potential of these ideas and look
-          forward to building what&apos;s next, together.
+          These concepts represent the creative foundation for what we can build together. Ready to transform these ideas
+          into campaigns that drive real engagement and deliver exceptional results for GSHA&apos;s biggest year yet.
         </motion.p>
 
         <motion.div className="space-y-4 sm:space-y-0 sm:flex sm:space-x-4" variants={itemVariants}>
@@ -82,42 +82,38 @@ export default function ClosingSection() {
             size="lg"
             variant="outline"
             className="border-ignite-orange text-ignite-orange hover:bg-ignite-orange hover:text-black transition-colors group w-full sm:w-auto"
-            onClick={() => window.open("mailto:contact@gsha.example.com", "_blank")}
+            onClick={() => window.open("mailto:drew@drewthekiiid.com", "_blank")}
           >
             Get in Touch <Mail className="ml-2 h-5 w-5 group-hover:animate-ping" />
           </Button>
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-ignite-orange to-ignite-red text-white hover:opacity-90 transition-opacity w-full sm:w-auto"
-            onClick={() => window.open("https://gsha.example.com/summit", "_blank")}
-          >
-            Visit GSHA Summit <ArrowUpRight className="ml-2 h-5 w-5" />
-          </Button>
         </motion.div>
 
-        <motion.div className="flex space-x-6 pt-8" variants={itemVariants}>
+        <motion.div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 pt-8" variants={itemVariants}>
+          <div className="flex items-center space-x-2 text-neutral-300">
+            <Mail size={20} />
+            <a href="mailto:drew@drewthekiiid.com" className="hover:text-ignite-orange transition-colors">
+              drew@drewthekiiid.com
+            </a>
+          </div>
+          <div className="flex items-center space-x-2 text-neutral-300">
+            <Phone size={20} />
+            <a href="tel:3126365563" className="hover:text-ignite-orange transition-colors">
+              (312) 636-5563
+            </a>
+          </div>
           <a
-            href="https://linkedin.com/company/gsha-example"
+            href="https://www.linkedin.com/in/drewthekiiid"
             target="_blank"
             rel="noopener noreferrer"
             className="text-neutral-400 hover:text-ignite-orange transition-colors"
           >
-            <Linkedin size={28} />
+            <Linkedin size={24} />
             <span className="sr-only">LinkedIn</span>
-          </a>
-          <a
-            href="https://twitter.com/gsha_example"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-400 hover:text-ignite-orange transition-colors"
-          >
-            <Twitter size={28} />
-            <span className="sr-only">Twitter</span>
           </a>
         </motion.div>
 
         <motion.p className="text-sm text-neutral-500 pt-12" variants={itemVariants}>
-          &copy; {new Date().getFullYear()} GSHA. All sparks reserved.
+          &copy; 2025 Copywriiite. All sparks reserved.
         </motion.p>
       </motion.div>
     </motion.section>
