@@ -79,18 +79,9 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
   })
 
   useEffect(() => {
-    if (typeof Audio !== "undefined") {
-      audioRefs.current.logoReveal = new Audio("/sounds/logo-reveal-shimmer.mp3")
-      audioRefs.current.searchBarAppear = new Audio("/sounds/digital-reveal.mp3")
-      audioRefs.current.headlineBuild = new Audio("/sounds/flame-lick.mp3")
-      audioRefs.current.finalIgnite = new Audio("/sounds/ignite-whoosh-subtle.mp3")
-      audioRefs.current.phraseClear = new Audio("/sounds/fast-whoosh-short.mp3")
-      audioRefs.current.headlineBurn = new Audio("/sounds/fire-crackle-short.mp3") // New sound
-      Object.values(audioRefs.current).forEach((audio) => {
-        if (audio) audio.volume = 0.4
-      })
-      if (audioRefs.current.headlineBurn) audioRefs.current.headlineBurn.volume = 0.6
-    }
+    // Disable audio loading for now to prevent 404 errors
+    // Sound files can be added later to the public/sounds/ directory
+    console.log("Audio disabled - no sound files available")
   }, [])
 
   const playSound = useCallback(
@@ -219,21 +210,20 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
               className={cn(
                 "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-center text-neutral-50",
                 "px-2 leading-tight",
-                // Apply burn class if animateHeadlineBurn is true, otherwise show normally
+                // Apply burn class if animateHeadlineBurn is true
                 animateHeadlineBurn ? "headline-burn-away" : ""
               )}
               style={{ 
-                fontFamily: "'Permanent Marker', cursive, sans-serif",
-                opacity: showHeadline && !animateHeadlineBurn ? 1 : animateHeadlineBurn ? undefined : 0
+                fontFamily: "'Permanent Marker', cursive, sans-serif"
               }}
-              variants={!animateHeadlineBurn ? headlineVariants : undefined}
-              initial={!animateHeadlineBurn ? "hidden" : undefined}
-              animate={!animateHeadlineBurn && showHeadline ? "visible" : undefined}
+              variants={headlineVariants}
+              initial="hidden"
+              animate={showHeadline ? "visible" : "hidden"}
             >
               {headlineText.split("").map((char, index) => (
                 <motion.span
                   key={index}
-                  variants={!animateHeadlineBurn ? headlineCharVariants : undefined}
+                  variants={headlineCharVariants}
                   className="inline-block"
                 >
                   {char === " " ? "\u00A0" : char}
