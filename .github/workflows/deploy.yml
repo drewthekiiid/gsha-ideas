@@ -19,16 +19,11 @@ jobs:
         with:
           node-version: '20' # Specify your Node.js version
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8 # Specify your pnpm version if needed
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install # Changed from pnpm install
 
       - name: Build Next.js application
-        run: pnpm run build
+        run: npm run build # Changed from pnpm run build
         env:
           # If you have any build-time environment variables, add them here
           # NEXT_PUBLIC_EXAMPLE_VARIABLE: ${{ secrets.EXAMPLE_VARIABLE }}
