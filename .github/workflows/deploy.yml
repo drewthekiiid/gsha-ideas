@@ -20,7 +20,7 @@ jobs:
           node-version: '20' # Specify your Node.js version
 
       - name: Install dependencies
-        run: npm install # Changed from pnpm install
+        run: npm install --legacy-peer-deps # Use legacy peer deps to resolve conflicts
 
       - name: Build Next.js application
         run: npm run build # Changed from pnpm run build
