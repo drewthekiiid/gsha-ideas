@@ -58,9 +58,9 @@ export default function ClosingSection() {
       </div>
 
       <motion.div className="z-10 text-center flex flex-col items-center space-y-12" variants={containerVariants}>
-        <motion.div className="flex flex-col sm:flex-row items-center gap-8" variants={itemVariants}>
+        <motion.div className="flex items-center justify-center gap-6 md:gap-8" variants={itemVariants}>
           <YourLogo className="h-12 md:h-16 w-auto" width={200} height={66} />
-          <span className="text-4xl font-thin text-ignite-orange mx-4">+</span>
+          <span className="text-3xl md:text-4xl font-light text-ignite-orange">×</span>
           <MosaicLogo className="h-12 md:h-16 w-auto" width={200} height={66} />
         </motion.div>
 
