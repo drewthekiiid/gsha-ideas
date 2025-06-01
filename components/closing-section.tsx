@@ -88,18 +88,20 @@ export default function ClosingSection() {
           </Button>
         </motion.div>
 
-        <motion.div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8 pt-8" variants={itemVariants}>
-          <div className="flex items-center space-x-2 text-neutral-300">
-            <Mail size={20} />
-            <a href="mailto:drew@drewthekiiid.com" className="hover:text-ignite-orange transition-colors">
-              drew@drewthekiiid.com
-            </a>
-          </div>
-          <div className="flex items-center space-x-2 text-neutral-300">
-            <Phone size={20} />
-            <a href="tel:3126365563" className="hover:text-ignite-orange transition-colors">
-              (312) 636-5563
-            </a>
+        <motion.div className="flex flex-col items-center space-y-6 pt-8" variants={itemVariants}>
+          <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
+            <div className="flex items-center space-x-2 text-neutral-300">
+              <Mail size={20} />
+              <a href="mailto:drew@drewthekiiid.com" className="hover:text-ignite-orange transition-colors">
+                drew@drewthekiiid.com
+              </a>
+            </div>
+            <div className="flex items-center space-x-2 text-neutral-300">
+              <Phone size={20} />
+              <a href="tel:3126365563" className="hover:text-ignite-orange transition-colors">
+                (312) 636-5563
+              </a>
+            </div>
           </div>
           <a
             href="https://www.linkedin.com/in/drewthekiiid"
