@@ -8,13 +8,12 @@ interface MosaicLogoProps {
 }
 
 export default function MosaicLogo({ className, width = 150, height = 50 }: MosaicLogoProps) {
-  // Replace with your actual logo path once uploaded
-  // For example: import mosaicLogoSrc from '/mosaic-actual-logo.svg';
-  const logoSrc = "/mosaic-logo-placeholder.png" // Placeholder
+  // Use the actual Mosaic logo file
+  const logoSrc = "/270f5f84-b6e6-4997-9a24-7b28d55b9fdf.png"
 
   return (
     <div className={cn("relative", className)}>
-      <Image src={logoSrc || "/placeholder.svg"} alt="Mosaic Logo" width={width} height={height} priority />
+      <Image src={logoSrc} alt="Mosaic Logo" width={width} height={height} priority />
     </div>
   )
 }

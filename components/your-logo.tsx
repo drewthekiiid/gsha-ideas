@@ -8,18 +8,17 @@ interface YourLogoProps {
 }
 
 export default function YourLogo({ className, width = 150, height = 50 }: YourLogoProps) {
-  // Replace with your actual logo path once uploaded
-  // For example: import yourLogoSrc from '/your-actual-logo.svg';
-  const logoSrc = "/your-logo-placeholder.png" // Placeholder
+  // Use the actual Drew Dean logo
+  const logoSrc = "/Drew Dean Logo White.png"
 
   return (
     <div className={cn("relative", className)}>
       <Image
-        src={logoSrc || "/placeholder.svg"}
-        alt="Your Company Logo"
+        src={logoSrc}
+        alt="Drew Dean Logo"
         width={width}
         height={height}
-        priority // Good for LCP if this logo is visible early
+        priority
       />
     </div>
   )
