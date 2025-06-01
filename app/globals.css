@@ -1,0 +1,353 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 3.9%; /* neutral-950 */
+    --foreground: 0 0% 98%; /* neutral-50 */
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 22 90% 55%; /* orange-500 */
+    --primary-foreground: 0 0% 98%; /* neutral-50 */
+    --secondary: 0 0% 14.9%; /* neutral-800 */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%; /* neutral-400 */
+    --accent: 30 90% 55%; /* amber-500 */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%; /* red-500 */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%; /* neutral-800 */
+    --input: 0 0% 14.9%;
+    --ring: 22 80% 60%; /* orange-400 */
+    --radius: 0.5rem;
+
+    /* Custom properties for advanced CSS */
+    --color-ignite-orange: hsl(22, 90%, 55%);
+    --color-ignite-red: hsl(0, 84.2%, 60.2%);
+    --color-ignite-yellow: hsl(45, 90%, 55%);
+    --color-dark-bg: hsl(0, 0%, 3.9%);
+  }
+
+  .dark {
+    /* Same as :root for a dark-by-default theme */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    opacity: 1 !important;
+  }
+  html {
+    scroll-snap-type: y mandatory;
+  }
+  body {
+    overscroll-behavior-y: contain;
+  }
+  div[id^="gemini-"],
+  div[id^="closing-"] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+}
+
+.bg-ignite-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, hsl(22 90% 55% / 0.3), var(--color-dark-bg) 70%);
+  animation: pulseGradient 10s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGradient {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+.bg-ignite-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: var(--color-ignite-yellow);
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatParticleSimple 8s ease-in-out infinite;
+  box-shadow: 0 0 5px var(--color-ignite-yellow), 0 0 10px var(--color-ignite-orange);
+}
+.particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+.particle:nth-child(2) {
+  top: 50%;
+  left: 80%;
+  animation-delay: 0.5s;
+}
+.particle:nth-child(3) {
+  top: 80%;
+  left: 30%;
+  animation-delay: 1s;
+}
+.particle:nth-child(4) {
+  top: 10%;
+  left: 90%;
+  animation-delay: 1.5s;
+}
+.particle:nth-child(5) {
+  top: 60%;
+  left: 50%;
+  animation-delay: 2s;
+}
+.particle:nth-child(6) {
+  top: 30%;
+  left: 70%;
+  animation-delay: 2.5s;
+}
+.particle:nth-child(7) {
+  top: 90%;
+  left: 20%;
+  animation-delay: 3s;
+}
+.particle:nth-child(8) {
+  top: 5%;
+  left: 40%;
+  animation-delay: 3.5s;
+}
+.particle:nth-child(9) {
+  top: 70%;
+  left: 60%;
+  animation-delay: 4s;
+}
+.particle:nth-child(10) {
+  top: 40%;
+  left: 5%;
+  animation-delay: 4.5s;
+}
+.particle:nth-child(11) {
+  top: 15%;
+  left: 65%;
+  animation-delay: 5s;
+}
+.particle:nth-child(12) {
+  top: 85%;
+  left: 45%;
+  animation-delay: 5.5s;
+}
+.particle:nth-child(13) {
+  top: 25%;
+  left: 85%;
+  animation-delay: 6s;
+}
+.particle:nth-child(14) {
+  top: 65%;
+  left: 15%;
+  animation-delay: 6.5s;
+}
+.particle:nth-child(15) {
+  top: 55%;
+  left: 95%;
+  animation-delay: 7s;
+}
+.particle:nth-child(16) {
+  top: 35%;
+  left: 5%;
+  animation-delay: 7.5s;
+}
+.particle:nth-child(17) {
+  top: 75%;
+  left: 75%;
+  animation-delay: 8s;
+}
+.particle:nth-child(18) {
+  top: 5%;
+  left: 55%;
+  animation-delay: 8.5s;
+}
+.particle:nth-child(19) {
+  top: 95%;
+  left: 35%;
+  animation-delay: 9s;
+}
+.particle:nth-child(20) {
+  top: 45%;
+  left: 25%;
+  animation-delay: 9.5s;
+}
+
+@keyframes floatParticleSimple {
+  0% {
+    transform: translateY(20px) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.reduced-motion * {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+.reduced-motion .bg-ignite-gradient {
+  animation: none;
+  opacity: 0.6;
+}
+.reduced-motion .particle {
+  display: none;
+}
+
+.blinking-cursor-css {
+  animation: blinkCursorCSS 1s step-end infinite;
+}
+@keyframes blinkCursorCSS {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Original flame-text-animation (used by HeroSection) */
+.flame-text-animation {
+  position: relative;
+  animation-name: burnAndDissolveWithEmbers;
+  animation-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  animation-fill-mode: forwards;
+  animation-duration: 2s;
+}
+.reduced-motion .flame-text-animation {
+  animation-duration: 0.5s !important;
+}
+
+.ember-particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: #ff6b35;
+  border-radius: 50%;
+  opacity: 0;
+  animation-name: riseAndFade;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-duration: 1.5s;
+  pointer-events: none;
+  z-index: 100;
+}
+.reduced-motion .ember-particle {
+  display: none !important;
+}
+
+@keyframes riseAndFade {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-150px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* New Headline Burn Away Animation */
+.headline-burn-away {
+  animation-name: headlineBurnEffect;
+  animation-duration: 1.2s; /* Duration of the burn effect */
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards; /* Keep final state */
+  position: relative; /* Needed for pseudo-elements if used */
+}
+
+@keyframes headlineBurnEffect {
+  0% {
+    opacity: 1;
+    text-shadow: 0 0 5px #fff, 0 0 10px var(--color-ignite-yellow), 0 0 15px var(--color-ignite-orange);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 10px var(--color-ignite-yellow), 0 0 20px var(--color-ignite-orange), 0 0 30px
+      var(--color-ignite-red);
+    color: transparent; /* Make text color transparent to show shadow more */
+  }
+  100% {
+    opacity: 0;
+    text-shadow: 0 0 15px var(--color-ignite-red), 0 0 25px var(--color-ignite-red);
+    transform: scale(1.1) translateY(-20px); /* Slightly scale up and lift */
+    color: transparent;
+  }
+}
+.reduced-motion .headline-burn-away {
+  animation-name: headlineBurnEffectReduced;
+  animation-duration: 0.4s !important;
+}
+@keyframes headlineBurnEffectReduced {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.reduced-motion .blinking-cursor {
+  animation: none !important;
+  opacity: 1 !important;
+}
+.reduced-motion .animate-personal-logos-to-corner > div {
+  animation: none !important;
+  opacity: 0 !important;
+}
