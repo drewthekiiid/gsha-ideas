@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/gsha-ideas",
-  assetPrefix: "/gsha-ideas",
+  basePath: "/ghsa2025",
+  assetPrefix: "/ghsa2025",
   eslint: {
     ignoreDuringBuilds: true,
   },
