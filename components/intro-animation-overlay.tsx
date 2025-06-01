@@ -108,9 +108,9 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
     if (prefersReducedMotion) {
       setShowLogos(true)
       setShowSearchBar(true)
+      setShowHeadline(true)
       setFirstPhraseTyped(true)
       setAllPhrasesTyped(true)
-      setShowHeadline(true)
       setAnimateHeadlineBurn(true) // Trigger burn immediately for reduced motion if needed, or just skip
       const timer = setTimeout(() => {
         setShowOverlay(false)
@@ -124,7 +124,11 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
       setShowLogos(true)
       playSound("logoReveal")
 
-      await new Promise((resolve) => setTimeout(resolve, 400))
+      await new Promise((resolve) => setTimeout(resolve, 200))
+      setShowHeadline(true) // Show headline right after logos
+      playSound("headlineBuild")
+
+      await new Promise((resolve) => setTimeout(resolve, 200))
       setShowSearchBar(true)
       playSound("searchBarAppear")
     }
@@ -134,6 +138,11 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
   const handleCurrentPhraseComplete = useCallback(() => {
     if (currentPhraseIndex === 0) {
       setFirstPhraseTyped(true)
+      // Start headline burn effect after search animation completes
+      setTimeout(() => {
+        setAnimateHeadlineBurn(true)
+        playSound("headlineBurn")
+      }, 300) // Small delay after typing completes
     }
 
     if (currentPhraseIndex < SEARCH_PHRASES.length - 1) {
@@ -148,34 +157,17 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
 
   useEffect(() => {
     if (prefersReducedMotion) return
-    if (firstPhraseTyped && !showHeadline) {
-      const showHeadlineTimer = setTimeout(() => {
-        setShowHeadline(true)
-        playSound("headlineBuild")
-      }, 100)
-      return () => clearTimeout(showHeadlineTimer)
-    }
-  }, [firstPhraseTyped, showHeadline, prefersReducedMotion, playSound])
-
-  useEffect(() => {
-    if (prefersReducedMotion) return
     if (allPhrasesTyped) {
-      // Start headline burn slightly before final ignite sound and overlay fade
-      const burnTimer = setTimeout(() => {
-        setAnimateHeadlineBurn(true)
-        playSound("headlineBurn")
-      }, 100) // Start burn effect
-
+      // Final ignite sound and overlay fade after headline burn
       const finalIgniteTimer = setTimeout(() => {
         playSound("finalIgnite", 0.7)
-      }, 200) // Slightly after burn starts
+      }, 500) // After burn animation
 
       const fadeOutTimer = setTimeout(() => {
         setShowOverlay(false)
-      }, 600) // Shortened overall exit time, ensure burn animation completes
+      }, 1000) // Give more time for burn animation to complete
 
       return () => {
-        clearTimeout(burnTimer)
         clearTimeout(finalIgniteTimer)
         clearTimeout(fadeOutTimer)
       }
@@ -223,13 +215,6 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
                 {mosaicLogoElement}
               </motion.div>
             </div>
-            <AnimatedSearchBar
-              typingKey={currentPhraseIndex}
-              textToType={SEARCH_PHRASES[currentPhraseIndex]}
-              isVisible={showSearchBar}
-              onTypingComplete={handleCurrentPhraseComplete}
-              className="mb-4 md:mb-6"
-            />
             <motion.h1
               className={cn(
                 "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-center text-neutral-50",
@@ -252,6 +237,13 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
                 </motion.span>
               ))}
             </motion.h1>
+            <AnimatedSearchBar
+              typingKey={currentPhraseIndex}
+              textToType={SEARCH_PHRASES[currentPhraseIndex]}
+              isVisible={showSearchBar}
+              onTypingComplete={handleCurrentPhraseComplete}
+              className="mb-4 md:mb-6"
+            />
           </div>
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="bg-ignite-gradient"></div>
