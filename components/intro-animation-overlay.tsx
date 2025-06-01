@@ -28,12 +28,10 @@ const logoVariants = {
   }),
 }
 
-const headlineText = "GSHA 2025: Ignite Your Performance"
+const headlineText = "GSHA 2025"
 
 const SEARCH_PHRASES = [
-  "How do you ignite a room full of Canada’s boldest marketers?",
-  "What sparks true engagement in a hybrid world?",
-  "Unlocking the future of experiential events...",
+  "How do you ignite a room full of Canada's boldest marketers?",
 ]
 
 // Reduced pause time between phrases
