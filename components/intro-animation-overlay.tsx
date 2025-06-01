@@ -199,7 +199,7 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
           exit="exit"
         >
           <div className="flex flex-col items-center justify-center space-y-6 md:space-y-10">
-            <div className="flex items-center space-x-6 md:space-x-8">
+            <div className="flex items-center justify-center gap-6 md:gap-8">
               <motion.div
                 custom={0}
                 variants={logoVariants}
@@ -207,6 +207,14 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
                 animate={showLogos ? "visible" : "hidden"}
               >
                 {yourLogoElement}
+              </motion.div>
+              <motion.div
+                custom={0.5}
+                variants={logoVariants}
+                initial="hidden"
+                animate={showLogos ? "visible" : "hidden"}
+              >
+                <span className="text-3xl md:text-4xl font-light text-ignite-orange">×</span>
               </motion.div>
               <motion.div
                 custom={1}
