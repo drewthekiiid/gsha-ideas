@@ -1,22 +1,26 @@
-import type React from "react"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
 
-interface LogoProps extends React.SVGProps<SVGSVGElement> {}
+interface YourLogoProps {
+  className?: string
+  width?: number
+  height?: number
+}
 
-const YourLogo: React.FC<LogoProps> = (props) => (
-  <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" {...props} aria-label="Your Company Logo">
-    <rect width="120" height="40" rx="5" ry="5" fill="currentColor" className="text-orange-500" />
-    <text
-      x="50%"
-      y="50%"
-      dominantBaseline="middle"
-      textAnchor="middle"
-      fill="#FFF"
-      fontSize="16"
-      fontWeight="bold"
-      fontFamily="Arial, sans-serif"
-    >
-      YOURS
-    </text>
-  </svg>
-)
-export default YourLogo
+export default function YourLogo({ className, width = 150, height = 50 }: YourLogoProps) {
+  // Replace with your actual logo path once uploaded
+  // For example: import yourLogoSrc from '/your-actual-logo.svg';
+  const logoSrc = "/your-logo-placeholder.png" // Placeholder
+
+  return (
+    <div className={cn("relative", className)}>
+      <Image
+        src={logoSrc || "/placeholder.svg"}
+        alt="Your Company Logo"
+        width={width}
+        height={height}
+        priority // Good for LCP if this logo is visible early
+      />
+    </div>
+  )
+}

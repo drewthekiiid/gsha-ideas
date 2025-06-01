@@ -1,22 +1,20 @@
-import type React from "react"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
 
-interface LogoProps extends React.SVGProps<SVGSVGElement> {}
+interface MosaicLogoProps {
+  className?: string
+  width?: number
+  height?: number
+}
 
-const MosaicLogo: React.FC<LogoProps> = (props) => (
-  <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" {...props} aria-label="Mosaic Company Logo">
-    <rect width="120" height="40" rx="5" ry="5" fill="currentColor" className="text-sky-500" />
-    <text
-      x="50%"
-      y="50%"
-      dominantBaseline="middle"
-      textAnchor="middle"
-      fill="#FFF"
-      fontSize="16"
-      fontWeight="bold"
-      fontFamily="Arial, sans-serif"
-    >
-      MOSAIC
-    </text>
-  </svg>
-)
-export default MosaicLogo
+export default function MosaicLogo({ className, width = 150, height = 50 }: MosaicLogoProps) {
+  // Replace with your actual logo path once uploaded
+  // For example: import mosaicLogoSrc from '/mosaic-actual-logo.svg';
+  const logoSrc = "/mosaic-logo-placeholder.png" // Placeholder
+
+  return (
+    <div className={cn("relative", className)}>
+      <Image src={logoSrc || "/placeholder.svg"} alt="Mosaic Logo" width={width} height={height} priority />
+    </div>
+  )
+}
