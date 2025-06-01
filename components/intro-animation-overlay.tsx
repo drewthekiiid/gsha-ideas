@@ -219,11 +219,14 @@ const IntroAnimationOverlay: React.FC<IntroAnimationOverlayProps> = ({ onAnimati
               className={cn(
                 "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-center text-neutral-50",
                 "px-2 leading-tight",
-                // Apply burn class if animateHeadlineBurn is true, otherwise control via Framer's opacity
-                animateHeadlineBurn ? "headline-burn-away" : showHeadline ? "opacity-100" : "opacity-0",
+                // Apply burn class if animateHeadlineBurn is true, otherwise show normally
+                animateHeadlineBurn ? "headline-burn-away" : ""
               )}
-              style={{ fontFamily: "'Permanent Marker', cursive, sans-serif" }}
-              variants={!animateHeadlineBurn ? headlineVariants : undefined} // Only use Framer variants if not burning
+              style={{ 
+                fontFamily: "'Permanent Marker', cursive, sans-serif",
+                opacity: showHeadline && !animateHeadlineBurn ? 1 : animateHeadlineBurn ? undefined : 0
+              }}
+              variants={!animateHeadlineBurn ? headlineVariants : undefined}
               initial={!animateHeadlineBurn ? "hidden" : undefined}
               animate={!animateHeadlineBurn && showHeadline ? "visible" : undefined}
             >
