@@ -21,7 +21,7 @@ interface HeroMenuProps {
 
 const OrbIcon = ({ itemName, isActive, themeColor }: { itemName: string; isActive: boolean; themeColor: string }) => {
   const iconClass = cn(
-    "h-4 w-4 md:h-5 md:w-5 transition-all duration-200",
+    "h-3 w-3 md:h-4 md:w-4 transition-all duration-200", // Changed size
     isActive ? "text-white" : `text-${themeColor}-200 group-hover:text-white`,
   )
   if (itemName.includes("Inferno")) return <Flame className={iconClass} />
@@ -47,17 +47,23 @@ const HeroMenu = ({
     if (typeof Audio !== "undefined") {
       menuOrbAudioRef.current = new Audio("/sounds/menu-orb-ripple.mp3")
       menuOrbAudioRef.current.volume = 0.2
+      menuOrbAudioRef.current.addEventListener('error', () => {
+        // Silently handle missing audio file
+        menuOrbAudioRef.current = null
+      })
     }
   }, [])
 
   const playHoverSound = () => {
     if (menuOrbAudioRef.current && !isMuted && !prefersReducedMotion) {
       menuOrbAudioRef.current.currentTime = 0
-      menuOrbAudioRef.current.play().catch(console.warn)
+      menuOrbAudioRef.current.play().catch(() => {
+        // Silently handle audio play errors
+      })
     }
   }
 
-  const menuBaseClasses = "w-full transition-all duration-500 ease-in-out py-3 md:py-4 z-40"
+  const menuBaseClasses = "w-full transition-all duration-500 ease-in-out py-4 md:py-6 z-40" // Reduced vertical padding
 
   // Logic for pinned instance
   if (onlyShowWhenPinned) {
@@ -72,7 +78,7 @@ const HeroMenu = ({
         )}
       >
         {/* Menu items UL - same as below */}
-        <ul className="flex justify-center items-center space-x-1 sm:space-x-2 md:space-x-3 px-4 overflow-x-auto pb-2 scrollbar-hide">
+        <ul className="flex justify-center items-center space-x-2 sm:space-x-3 md:space-x-4 px-10 overflow-x-auto py-5 scrollbar-hide">
           {items.map((item) => {
             const itemThemeColor = item.themeColor || "gray"
             const isActive = activeSection === item.id
@@ -82,11 +88,11 @@ const HeroMenu = ({
                   onClick={() => onSelectItem(item.id)}
                   onMouseEnter={playHoverSound}
                   className={cn(
-                    "flex flex-col items-center justify-center px-2 py-2 md:px-3 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 whitespace-nowrap relative overflow-hidden",
-                    "transform hover:-translate-y-1",
+                    "flex flex-col items-center justify-center px-3 py-3 md:px-4 md:py-3 rounded-xl text-xs md:text-sm font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 whitespace-nowrap relative overflow-hidden",
+                    "transform hover:-translate-y-0.5",
                     isActive
-                      ? `bg-${itemThemeColor}-500 text-white shadow-lg shadow-${itemThemeColor}-500/50 scale-105 ring-${itemThemeColor}-400 orb-active-glow`
-                      : `text-neutral-300 hover:bg-${itemThemeColor}-600/50 hover:text-white ring-transparent hover:ring-${itemThemeColor}-500/50 orb-hover-effect`,
+                      ? `bg-${itemThemeColor}-500 text-white shadow-md shadow-${itemThemeColor}-500/30 scale-105 ring-${itemThemeColor}-400 orb-active-glow`
+                      : `text-neutral-300 hover:bg-${itemThemeColor}-600/40 hover:text-white ring-transparent hover:ring-${itemThemeColor}-500/30 orb-hover-effect`,
                     !prefersReducedMotion && "orb-animation-parent",
                   )}
                   aria-current={isActive ? "page" : undefined}
@@ -108,7 +114,7 @@ const HeroMenu = ({
                     ></span>
                   )}
                   <OrbIcon itemName={item.name} isActive={isActive} themeColor={itemThemeColor} />
-                  <span className="mt-1 leading-tight">{item.name.replace("Gemini ", "")}</span>
+                  <span className="mt-1.5 leading-tight text-center">{item.name.replace("Gemini ", "")}</span>
                 </button>
               </li>
             )
@@ -120,13 +126,43 @@ const HeroMenu = ({
             to { opacity: 1; transform: translateY(0); }
           }
           .animate-pinnedMenuFadeIn { animation: pinnedMenuFadeInAnim 0.5s ease-out forwards; }
-          /* Orb styles from previous response */
-          .orb-visual-effect { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
-          .group:hover .orb-visual-effect { background-color: var(--ripple-color); animation: rippleEffect 0.6s ease-out; }
-          @keyframes rippleEffect { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
-          .orb-hover-effect:hover { box-shadow: 0 0 15px 3px var(--orb-glow-color); }
-          .orb-active-glow { box-shadow: 0 0 20px 5px var(--orb-glow-color), 0 0 30px 10px var(--orb-bg-color); animation: pulseGlowActive 2s infinite ease-in-out; }
-          @keyframes pulseGlowActive { 0%, 100% { box-shadow: 0 0 20px 5px var(--orb-glow-color), 0 0 30px 10px var(--orb-bg-color); transform: scale(1.05); } 50% { box-shadow: 0 0 25px 8px var(--orb-glow-color), 0 0 40px 15px var(--orb-bg-color); transform: scale(1.08); } }
+          /* Refined orb styles with subtle glow effects */
+          .orb-visual-effect { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) scale(0); 
+            opacity: 0; 
+            pointer-events: none; 
+          }
+          .group:hover .orb-visual-effect { 
+            background-color: var(--ripple-color); 
+            animation: rippleEffect 0.6s ease-out; 
+          }
+          @keyframes rippleEffect { 
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } 
+          }
+          .orb-hover-effect:hover { 
+            box-shadow: 0 0 4px 0px var(--orb-glow-color); 
+          }
+          .orb-active-glow { 
+            box-shadow: 0 0 8px 1px var(--orb-glow-color), 0 0 12px 2px var(--orb-bg-color); 
+            animation: pulseGlowActive 3s infinite ease-in-out; 
+          }
+          @keyframes pulseGlowActive { 
+            0%, 100% { 
+              box-shadow: 0 0 8px 1px var(--orb-glow-color), 0 0 12px 2px var(--orb-bg-color); 
+              transform: scale(1.05); 
+            } 
+            50% { 
+              box-shadow: 0 0 10px 2px var(--orb-glow-color), 0 0 15px 3px var(--orb-bg-color); 
+              transform: scale(1.06); 
+            } 
+          }
         `}</style>
       </nav>
     )
@@ -137,7 +173,7 @@ const HeroMenu = ({
   return (
     <nav className={cn(menuBaseClasses, "absolute bottom-0 left-0 right-0", className)}>
       {/* Menu items UL - same as above */}
-      <ul className="flex justify-center items-center space-x-1 sm:space-x-2 md:space-x-3 px-4 overflow-x-auto pb-2 scrollbar-hide">
+      <ul className="flex justify-center items-center space-x-2 sm:space-x-3 md:space-x-4 px-10 overflow-x-auto py-5 scrollbar-hide">
         {items.map((item) => {
           const itemThemeColor = item.themeColor || "gray"
           const isActive = activeSection === item.id
@@ -147,11 +183,11 @@ const HeroMenu = ({
                 onClick={() => onSelectItem(item.id)}
                 onMouseEnter={playHoverSound}
                 className={cn(
-                  "flex flex-col items-center justify-center px-2 py-2 md:px-3 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 whitespace-nowrap relative overflow-hidden",
-                  "transform hover:-translate-y-1",
+                  "flex flex-col items-center justify-center px-3 py-3 md:px-4 md:py-3 rounded-xl text-xs md:text-sm font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 whitespace-nowrap relative overflow-hidden",
+                  "transform hover:-translate-y-0.5",
                   isActive
-                    ? `bg-${itemThemeColor}-500 text-white shadow-lg shadow-${itemThemeColor}-500/50 scale-105 ring-${itemThemeColor}-400 orb-active-glow`
-                    : `text-neutral-300 hover:bg-${itemThemeColor}-600/50 hover:text-white ring-transparent hover:ring-${itemThemeColor}-500/50 orb-hover-effect`,
+                    ? `bg-${itemThemeColor}-500 text-white shadow-md shadow-${itemThemeColor}-500/30 scale-105 ring-${itemThemeColor}-400 orb-active-glow`
+                    : `text-neutral-300 hover:bg-${itemThemeColor}-600/40 hover:text-white ring-transparent hover:ring-${itemThemeColor}-500/30 orb-hover-effect`,
                   !prefersReducedMotion && "orb-animation-parent",
                 )}
                 aria-current={isActive ? "page" : undefined}
@@ -173,20 +209,50 @@ const HeroMenu = ({
                   ></span>
                 )}
                 <OrbIcon itemName={item.name} isActive={isActive} themeColor={itemThemeColor} />
-                <span className="mt-1 leading-tight">{item.name.replace("Gemini ", "")}</span>
+                <span className="mt-1.5 leading-tight text-center">{item.name.replace("Gemini ", "")}</span>
               </button>
             </li>
           )
         })}
       </ul>
-      {/* Orb styles from previous response, ensure they are present */}
+      {/* Refined orb styles with subtle glow effects */}
       <style jsx>{`
-          .orb-visual-effect { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; border-radius: 50%; transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; }
-          .group:hover .orb-visual-effect { background-color: var(--ripple-color); animation: rippleEffect 0.6s ease-out; }
-          @keyframes rippleEffect { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; } }
-          .orb-hover-effect:hover { box-shadow: 0 0 15px 3px var(--orb-glow-color); }
-          .orb-active-glow { box-shadow: 0 0 20px 5px var(--orb-glow-color), 0 0 30px 10px var(--orb-bg-color); animation: pulseGlowActive 2s infinite ease-in-out; }
-          @keyframes pulseGlowActive { 0%, 100% { box-shadow: 0 0 20px 5px var(--orb-glow-color), 0 0 30px 10px var(--orb-bg-color); transform: scale(1.05); } 50% { box-shadow: 0 0 25px 8px var(--orb-glow-color), 0 0 40px 15px var(--orb-bg-color); transform: scale(1.08); } }
+          .orb-visual-effect { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) scale(0); 
+            opacity: 0; 
+            pointer-events: none; 
+          }
+          .group:hover .orb-visual-effect { 
+            background-color: var(--ripple-color); 
+            animation: rippleEffect 0.6s ease-out; 
+          }
+          @keyframes rippleEffect { 
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; } 
+          }
+          .orb-hover-effect:hover { 
+            box-shadow: 0 0 4px 0px var(--orb-glow-color); 
+          }
+          .orb-active-glow { 
+            box-shadow: 0 0 8px 1px var(--orb-glow-color), 0 0 12px 2px var(--orb-bg-color); 
+            animation: pulseGlowActive 3s infinite ease-in-out; 
+          }
+          @keyframes pulseGlowActive { 
+            0%, 100% { 
+              box-shadow: 0 0 8px 1px var(--orb-glow-color), 0 0 12px 2px var(--orb-bg-color); 
+              transform: scale(1.05); 
+            } 
+            50% { 
+              box-shadow: 0 0 10px 2px var(--orb-glow-color), 0 0 15px 3px var(--orb-bg-color); 
+              transform: scale(1.06); 
+            } 
+          }
       `}</style>
     </nav>
   )

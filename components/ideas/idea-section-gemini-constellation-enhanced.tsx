@@ -6,7 +6,7 @@ import { useAppContext } from "@/context/app-context"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Star, Users, Zap, Eye, QrCode, MessageCircle, Sparkles, Target, Trophy, FileText } from "lucide-react"
+import { Star, Users, Zap, Eye, QrCode, MessageCircle, Sparkles, Target, Trophy } from "lucide-react"
 
 // Personal Star Creation Prompts
 const STAR_PROMPTS = [
@@ -342,41 +342,39 @@ const IdeaSectionGeminiConstellation: React.FC = () => {
   ]
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      id="gemini-constellation"
-      className={cn(
-        "min-h-screen w-full py-16 md:py-24 bg-gradient-to-br from-slate-900 via-purple-950 to-slate-950 text-purple-100 transition-opacity duration-1000 ease-in-out",
-        isCurrentlyActive ? "opacity-100" : "opacity-50"
-      )}
-      aria-labelledby="gemini-constellation-heading"
+      className="min-h-screen w-full flex flex-col items-center justify-center relative text-center p-4 overflow-hidden bg-neutral-900"
     >
-      <div className="container mx-auto px-4 md:px-8 relative">
-        <header className="text-center mb-12 md:mb-16">
+      {/* Cosmic Background with Space Dust and Nebula */}
+      <div className="absolute inset-0 z-0 constellation-bg">
+        {!prefersReducedMotion && (
+          <>
+            <div className="space-dust-tunnel" />
+            <div className="stellar-particles" />
+            <div className="cosmic-nebula nebula-1" />
+            <div className="cosmic-nebula nebula-2" />
+            {galaxyFusion && <div className="galaxy-fusion-effect" />}
+          </>
+        )}
+      </div>
+
+      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-around h-full w-full max-w-6xl mx-auto gap-8">
+        {/* Left Side: Info & Story */}
+        <div className="lg:w-2/5 flex flex-col items-center lg:items-start text-center lg:text-left">
           <h2
             className={cn(
-              "text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-rose-500",
-              !prefersReducedMotion && isCurrentlyActive && "animate-title-glow",
+              "text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-blue-500 to-cyan-400",
+              !prefersReducedMotion && isCurrentlyActive && "animate-cosmic-title",
             )}
           >
-            Gemini Constellation: The Night Search Lit Up the Sky {/* Changed header text */}
+            Gemini Constellation: The Night Search Lit Up the Sky
           </h2>
-          <p className="text-xl md:text-2xl text-purple-200 mb-8">
-            Connect the dots between data, insight, and inspiration
+          <p className="text-xl md:text-2xl text-purple-200 mb-8 md:mb-10">
+            Where connections become constellations
           </p>
-          {/* Notion Link Button */}
-          <Button variant="outline" className="mt-6 border-orange-400/50 text-orange-300 hover:bg-orange-400/10 hover:text-orange-200" asChild>
-            <a href="https://www.notion.so/Gemini-Constellation-The-Night-Search-Lit-Up-the-Sky-20494b73a48480fd8252d3a544e0de9d?source=copy_link" target="_blank" rel="noopener noreferrer">
-              <FileText className="mr-2 h-4 w-4" />
-              View Text-Only Concept
-            </a>
-          </Button>
-        </header>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column - Story Panels */}
-          <div className="flex flex-col gap-8">
+          <div className="space-y-4 mb-6 w-full max-w-md">
             {storyPanels.map((panel, index) => (
               <Card
                 key={panel.title}
@@ -386,183 +384,195 @@ const IdeaSectionGeminiConstellation: React.FC = () => {
                 )}
                 style={{ animationDelay: prefersReducedMotion ? "0s" : `${index * 0.2 + 0.4}s` }}
               >
-                <CardHeader className="p-4">
+                <CardHeader className="pb-2 pt-4">
                   <CardTitle className="text-xl text-purple-300">{panel.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 pt-0">
+                <CardContent className="pb-4">
                   <p className="text-neutral-200 text-sm leading-relaxed">{panel.content}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
+          
+          <Card className="bg-black/60 border-purple-500/30 p-3 text-xs shadow-lg w-full max-w-md">
+            <p className="text-cyan-400 font-semibold">@StellarMarketer on X:</p>
+            <p className="text-neutral-300 italic">
+              "Just experienced the most epic networking event ever! My campaign data literally became stars in the sky ✨ #GSHA2025 #ConstellationMagic"
+            </p>
+          </Card>
+        </div>
 
-          {/* Right Column - Interactive Elements */}
-          <div className="flex flex-col gap-6">
-            {/* Personal Star Token Display */}
-            {personalStar && (
-              <Card className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 border-purple-400/50">
-                <CardHeader className="p-4">
-                  <CardTitle className="text-xl text-purple-300 flex items-center gap-2">
-                    <QrCode size={18} /> Your Star Token
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 pt-0">
-                  <div className="flex items-center justify-between">
-                    <p className="text-purple-100 font-mono text-sm">{personalStar.tokenId}</p>
-                    <div className={cn(
-                      "w-4 h-4 rounded-full",
-                      twinStarPulse ? "animate-pulse bg-cyan-400" : "bg-purple-400"
-                    )} />
-                  </div>
-                  <p className="text-purple-200 text-sm italic">"{personalStar.prompt}"</p>
-                  <p className="text-purple-300 text-sm">Answer: {personalStar.response}</p>
-                  <div className="flex items-center gap-4 text-xs">
-                    <span className="text-purple-300">Alchemy Matches: {personalStar.alchemyMatches}</span>
-                    <span className="text-purple-300">Connections: {personalStar.connections.length}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Interactive Controls */}
-            <div className="grid grid-cols-2 gap-4">
-              <Button
-                onClick={handleStarAlchemy}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-4 rounded-lg transition-all"
-              >
-                <Zap className="h-4 w-4 mr-2" />
-                Star Alchemy
-              </Button>
-              
-              <Button
-                onClick={handleArDiscovery}
-                className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-lg transition-all"
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                AR Discovery
-              </Button>
-            </div>
-
-            {/* Current Mission */}
-            <Card className="bg-neutral-800/50 border-cyan-500/50">
+        {/* Right Side: Interactive Constellation Experience */}
+        <div className="lg:w-3/5 flex flex-col gap-6">
+          {/* Personal Star Token Display */}
+          {personalStar && (
+            <Card className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 border-purple-400/50">
               <CardHeader className="pb-3">
-                <CardTitle className="text-lg text-cyan-300 flex items-center gap-2">
-                  <Target size={18} /> Active Mission
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <p className="text-cyan-100 font-semibold">{currentMission.challenge}</p>
-                <p className="text-cyan-200 text-sm">{currentMission.description}</p>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-cyan-300">Participants needed: {currentMission.participants}</span>
-                  <Button
-                    onClick={handleConstellationMission}
-                    size="sm"
-                    className="bg-cyan-600 hover:bg-cyan-500"
-                  >
-                    Join Mission
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Room Energy & Progress */}
-            <Card className="bg-neutral-800/50 border-purple-500/50">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg text-purple-300 flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <Sparkles size={18} /> Room Energy
-                  </span>
-                  <span className="text-sm font-mono">{roomEnergy}%</span>
+                <CardTitle className="text-lg text-purple-300 flex items-center gap-2">
+                  <QrCode size={18} /> Your Star Token
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <div className="w-full bg-neutral-700 h-3 rounded overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 transition-all duration-1000"
-                    style={{ width: `${roomEnergy}%` }}
-                  />
+                <div className="flex items-center justify-between">
+                  <p className="text-purple-100 font-mono text-sm">{personalStar.tokenId}</p>
+                  <div className={cn(
+                    "w-4 h-4 rounded-full",
+                    twinStarPulse ? "animate-pulse bg-cyan-400" : "bg-purple-400"
+                  )} />
                 </div>
-                
-                {earnedBadges.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="text-sm text-purple-300 font-semibold">Earned Badges:</p>
-                    {earnedBadges.slice(0, 3).map((badge, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-cyan-300">
-                        <Trophy size={12} className="text-cyan-400" />
-                        {badge}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                {arDiscoveries.length > 0 && (
-                  <div className="space-y-2">
-                    <p className="text-sm text-purple-300 font-semibold">AR Discoveries:</p>
-                    {arDiscoveries.slice(0, 2).map((discovery, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-yellow-300">
-                        <Star size={12} className="text-yellow-400" />
-                        {discovery}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                <Button
-                  onClick={handleGalaxyFusion}
-                  className="w-full mt-3 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 hover:from-purple-500 hover:via-blue-500 hover:to-cyan-500 text-white transition-all"
-                >
-                  Trigger Galaxy Fusion
-                </Button>
+                <p className="text-purple-200 text-sm italic">"{personalStar.prompt}"</p>
+                <p className="text-purple-300 text-sm">Answer: {personalStar.response}</p>
+                <div className="flex items-center gap-4 text-xs">
+                  <span className="text-purple-300">Alchemy Matches: {personalStar.alchemyMatches}</span>
+                  <span className="text-purple-300">Connections: {personalStar.connections.length}</span>
+                </div>
               </CardContent>
             </Card>
+          )}
+
+          {/* Interactive Controls */}
+          <div className="grid grid-cols-2 gap-4">
+            <Button
+              onClick={handleStarAlchemy}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold py-3 px-4 rounded-lg transition-all"
+            >
+              <Zap className="h-4 w-4 mr-2" />
+              Star Alchemy
+            </Button>
+            
+            <Button
+              onClick={handleArDiscovery}
+              className="bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white font-semibold py-3 px-4 rounded-lg transition-all"
+            >
+              <Eye className="h-4 w-4 mr-2" />
+              AR Discovery
+            </Button>
+          </div>
+
+          {/* Current Mission */}
+          <Card className="bg-neutral-800/50 border-cyan-500/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg text-cyan-300 flex items-center gap-2">
+                <Target size={18} /> Active Mission
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <p className="text-cyan-100 font-semibold">{currentMission.challenge}</p>
+              <p className="text-cyan-200 text-sm">{currentMission.description}</p>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-cyan-300">Participants needed: {currentMission.participants}</span>
+                <Button
+                  onClick={handleConstellationMission}
+                  size="sm"
+                  className="bg-cyan-600 hover:bg-cyan-500"
+                >
+                  Join Mission
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Room Energy & Progress */}
+          <Card className="bg-neutral-800/50 border-purple-500/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg text-purple-300 flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <Sparkles size={18} /> Room Energy
+                </span>
+                <span className="text-sm font-mono">{roomEnergy}%</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="w-full bg-neutral-700 h-3 rounded overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 transition-all duration-1000"
+                  style={{ width: `${roomEnergy}%` }}
+                />
+              </div>
+              
+              {earnedBadges.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-sm text-purple-300 font-semibold">Earned Badges:</p>
+                  {earnedBadges.slice(0, 3).map((badge, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-cyan-300">
+                      <Trophy size={12} className="text-cyan-400" />
+                      {badge}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {arDiscoveries.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-sm text-purple-300 font-semibold">AR Discoveries:</p>
+                  {arDiscoveries.slice(0, 2).map((discovery, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-yellow-300">
+                      <Star size={12} className="text-yellow-400" />
+                      {discovery}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              <Button
+                onClick={handleGalaxyFusion}
+                className="w-full mt-3 bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 hover:from-purple-500 hover:via-blue-500 hover:to-cyan-500 text-white transition-all"
+              >
+                Trigger Galaxy Fusion
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {/* Connection Zap Effects */}
+      {connectionZaps.map(zap => (
+        <div
+          key={zap.id}
+          className="absolute pointer-events-none z-15"
+          style={{
+            left: `${zap.x1}%`,
+            top: `${zap.y1}%`,
+            width: `${Math.abs(zap.x2 - zap.x1)}%`,
+            height: `${Math.abs(zap.y2 - zap.y1)}%`,
+          }}
+        >
+          <div className="constellation-zap" />
+        </div>
+      ))}
+
+      {/* Gemini AI Narration */}
+      {showNarration && (
+        <div
+          className={cn(
+            "absolute top-[15%] left-[5%] right-[5%] bg-gradient-to-r from-black/90 to-purple-900/80 p-4 rounded-lg shadow-2xl border border-purple-500/50",
+            !prefersReducedMotion && "animate-cosmic-narration",
+            "z-20 text-center"
+          )}
+        >
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <MessageCircle className="h-5 w-5 text-purple-400" />
+            <span className="text-purple-400 font-semibold text-sm">Gemini Constellation Guide</span>
+          </div>
+          <p className="text-purple-200 text-sm italic">{currentNarration}</p>
+        </div>
+      )}
+
+      {/* Room Energy Stream */}
+      {showEnergyStream && (
+        <div
+          className={cn(
+            "absolute bottom-[10%] right-[5%] bg-black/80 p-3 rounded-lg shadow-2xl border border-cyan-500/50",
+            !prefersReducedMotion && "animate-energy-pulse",
+            "z-20"
+          )}
+        >
+          <div className="flex items-center gap-2 text-cyan-300 text-sm font-mono">
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+            {energyStream}
           </div>
         </div>
-
-        {/* Connection Zap Effects */}
-        {connectionZaps.map(zap => (
-          <div
-            key={zap.id}
-            className="absolute pointer-events-none z-15"
-            style={{
-              left: `${zap.x1}%`,
-              top: `${zap.y1}%`,
-              width: `${Math.abs(zap.x2 - zap.x1)}%`,
-              height: `${Math.abs(zap.y2 - zap.y1)}%`,
-            }}
-          >
-            <div className="constellation-zap" />
-          </div>
-        ))}
-
-        {/* Gemini AI Narration */}
-        {showNarration && (
-          <div
-            className={cn(
-              "absolute top-4 left-1/2 -translate-x-1/2 z-20 p-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-lg shadow-xl backdrop-blur-sm max-w-2xl animate-gemini-narration-fade-in"
-            )}
-          >
-            <p className="text-purple-200 font-semibold text-sm mb-1">Gemini AI Live Narration:</p>
-            <p className="text-white text-lg italic">{currentNarration}</p>
-          </div>
-        )}
-
-        {/* Room Energy Stream */}
-        {showEnergyStream && (
-          <div
-            className={cn(
-              "absolute bottom-[10%] right-[5%] bg-black/80 p-3 rounded-lg shadow-2xl border border-cyan-500/50",
-              !prefersReducedMotion && "animate-energy-pulse",
-              "z-20"
-            )}
-          >
-            <div className="flex items-center gap-2 text-cyan-300 text-sm font-mono">
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-              {energyStream}
-            </div>
-          </div>
-        )}
-      </div>
+      )}
 
       <style jsx>{`
         .constellation-bg {
@@ -716,7 +726,7 @@ const IdeaSectionGeminiConstellation: React.FC = () => {
           transform: none !important;
         }
       `}</style>
-    </section>
+    </div>
   )
 }
 

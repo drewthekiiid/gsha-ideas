@@ -7,33 +7,6 @@ import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Lightbulb, Key, Compass, MessageSquare } from "lucide-react" // Icons for insights/Gemini
 
-// Define MAZE_GRID (example structure, adjust as needed)
-const MAZE_GRID: number[][] = [
-  [2, 0, 0, 5, 1],
-  [1, 1, 0, 1, 0],
-  [0, 0, 0, 5, 0],
-  [0, 1, 1, 1, 0],
-  [5, 0, 0, 0, 3]
-];
-
-// Define INSIGHTS (example structure, adjust as needed)
-const INSIGHTS: string[] = [
-  "AI can predict market trends with 75% accuracy.",
-  "Personalized content increases engagement by 50%.",
-  "Data-driven campaigns have 30% higher ROI.",
-  "Understanding user behavior is key to optimization.",
-  "Continuous A/B testing improves conversion rates."
-];
-
-// Define GEMINI_QUIPS (example structure, adjust as needed)
-const GEMINI_QUIPS: string[] = [
-  "Navigating this like a pro!",
-  "That's a smart move!",
-  "Insight unlocked!",
-  "The Labyrinth reveals its secrets to the worthy!",
-  "You're on fire (digitally, of course)!"
-];
-
 // Personal Data-Driven Journey System
 const PERSONAL_ROUTES = [
   { id: "GSHA-2025-ROUTE-0847", keywords: "performance marketing, AI optimization", heatIntensity: 85 },
@@ -110,11 +83,6 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
   const [showConvergence, setShowConvergence] = useState(false)
   const [journeyProgress, setJourneyProgress] = useState(0)
   const [heatmapActive, setHeatmapActive] = useState(false)
-  const [maze, setMaze] = useState<number[][]>(() => MAZE_GRID.map(row => [...row]))
-  const [solvedPaths, setSolvedPaths] = useState<string[]>([])
-  const [revealedInsights, setRevealedInsights] = useState<string[]>([])
-  const [currentGeminiQuip, setCurrentGeminiQuip] = useState("")
-  const [showQuip, setShowQuip] = useState(false)
 
   const sectionRef = useRef<HTMLDivElement>(null)
   const isCurrentlyActive = activeSection === "gemini-labyrinth"
@@ -156,11 +124,11 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
   }, [isCurrentlyActive, prefersReducedMotion, isMuted])
 
   const handleCellClick = (r: number, c: number) => {
-    if (prefersReducedMotion || !isCurrentlyActive || !maze[r] || maze[r][c] === 1) return // Wall or inactive or out of bounds
+    if (prefersReducedMotion || !isCurrentlyActive || maze[r][c] === 1) return // Wall or inactive
 
     const cellKey = `${r}-${c}`
     if (solvedPaths.includes(cellKey)) return // Already solved
-    
+
     const newSolvedPaths = [...solvedPaths, cellKey]
     setSolvedPaths(newSolvedPaths)
 
@@ -168,8 +136,9 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
       audioRefs.solvePath.current.currentTime = 0
       audioRefs.solvePath.current.play().catch(console.warn)
     }
-    
-    if (maze[r][c] === 5) { // Insight node
+
+    if (maze[r][c] === 5) {
+      // Insight node
       const insightIndex = revealedInsights.length % INSIGHTS.length
       setRevealedInsights((prev) => [...new Set([...prev, INSIGHTS[insightIndex]])])
       if (!isMuted && audioRefs.revealInsight.current) {
@@ -178,9 +147,7 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
       }
       // Update maze to show solved insight node
       const newMaze = maze.map((row) => [...row])
-      if (newMaze[r] && newMaze[r][c] !== undefined) {
-        newMaze[r][c] = 6 // Mark as solved insight node
-      }
+      newMaze[r][c] = 6 // Mark as solved insight node
       setMaze(newMaze)
     }
 
@@ -273,10 +240,10 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
         <div className="lg:w-1/2 flex flex-col items-center gap-4">
           <div
             className="grid border border-cyan-700/50 bg-neutral-800/30 p-2 rounded-lg shadow-2xl"
-            style={{ gridTemplateColumns: `repeat(${maze[0]?.length || 0}, minmax(0, 1fr))` }}
+            style={{ gridTemplateColumns: `repeat(${maze[0].length}, minmax(0, 1fr))` }}
           >
-            {maze.map((row: number[], rIdx: number) =>
-              row.map((cell: number, cIdx: number) => {
+            {maze.map((row, rIdx) =>
+              row.map((cell, cIdx) => {
                 const cellKey = `${rIdx}-${cIdx}`
                 const isSolved = solvedPaths.includes(cellKey) || cell === 4 || cell === 6
                 return (
@@ -295,7 +262,7 @@ const IdeaSectionGeminiLabyrinth: React.FC = () => {
                       !prefersReducedMotion && isCurrentlyActive && "animate-cell-appear",
                     )}
                     style={{
-                      animationDelay: prefersReducedMotion ? "0s" : `${(rIdx * (maze[0]?.length || 0) + cIdx) * 0.03 + 0.5}s`,
+                      animationDelay: prefersReducedMotion ? "0s" : `${(rIdx * maze[0].length + cIdx) * 0.03 + 0.5}s`,
                     }}
                   >
                     {cell === 2 && <Compass size={20} />}

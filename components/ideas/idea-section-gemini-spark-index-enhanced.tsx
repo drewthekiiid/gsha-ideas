@@ -6,7 +6,7 @@ import { useAppContext } from "@/context/app-context"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { TrendingUp, Zap, UserCheck, Trophy, Target, Users, FileText } from "lucide-react"
+import { TrendingUp, Zap, UserCheck, Trophy, Target, Users } from "lucide-react"
 
 const SPARK_CATEGORIES = [
   { name: "Sarah M.", category: "Bravest AI Leap", score: 9870, change: "+250", badge: "🚀" },
@@ -39,29 +39,17 @@ const GOOGLE_BADGES = [
   { name: "Creative Catalyst", icon: "⚡" },
   { name: "Collaboration Champion", icon: "🤝" },
   { name: "GSHA Game Changer", icon: "🏆" }
-];
-
-// Add GEMINI_NARRATIONS constant
-const GEMINI_NARRATIONS = [
-  "The Spark Index is electrifying! Keep those ideas coming!",
-  "I'm detecting some serious brainpower in this room.",
-  "Every contribution counts! Let's see those scores climb!",
-  "This is where innovation gets its spark. You're all on fire!",
-  "The leaderboard is constantly shifting - it's anyone's game!",
 ]
 
 const IdeaSectionGeminiSparkIndex: React.FC = () => {
-  const { isMuted, prefersReducedMotion, activeSection } = useAppContext();
-  const [userScore, setUserScore] = useState(7500);
-  const [leaderboard, setLeaderboard] = useState(SPARK_CATEGORIES);
-  const [showGeminiInsight, setShowGeminiInsight] = useState(false);
-  const [currentInsight, setCurrentInsight] = useState("");
-  const [sparkCard, setSparkCard] = useState("GSHA-2025-SPARK-7742");
-  const [currentContribution, setCurrentContribution] = useState("");
-  const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
-  // Add missing state variables for Gemini narration
-  const [geminiNarration, setGeminiNarration] = useState("");
-  const [showGeminiNarration, setShowGeminiNarration] = useState(false);
+  const { isMuted, prefersReducedMotion, activeSection } = useAppContext()
+  const [userScore, setUserScore] = useState(7500)
+  const [leaderboard, setLeaderboard] = useState(SPARK_CATEGORIES)
+  const [showGeminiInsight, setShowGeminiInsight] = useState(false)
+  const [currentInsight, setCurrentInsight] = useState("")
+  const [sparkCard, setSparkCard] = useState("GSHA-2025-SPARK-7742")
+  const [currentContribution, setCurrentContribution] = useState("")
+  const [earnedBadges, setEarnedBadges] = useState<string[]>([])
 
   const sectionRef = useRef<HTMLDivElement>(null)
   const isCurrentlyActive = activeSection === "gemini-spark-index"
@@ -96,21 +84,6 @@ const IdeaSectionGeminiSparkIndex: React.FC = () => {
       setCurrentContribution("")
     }
   }, [isCurrentlyActive, prefersReducedMotion, isMuted])
-
-  // Add useEffect for Gemini AI narration
-  useEffect(() => {
-    if (!isCurrentlyActive) return;
-
-    const narrationInterval = setInterval(() => {
-      const randomNarration = GEMINI_NARRATIONS[Math.floor(Math.random() * GEMINI_NARRATIONS.length)];
-      setGeminiNarration(randomNarration);
-      setShowGeminiNarration(true);
-      
-      setTimeout(() => setShowGeminiNarration(false), 4000); // Narration visible for 4 seconds
-    }, 8000); // New narration every 8 seconds
-
-    return () => clearInterval(narrationInterval);
-  }, [isCurrentlyActive]);
 
   const handleContributeSpark = () => {
     if (prefersReducedMotion || !isCurrentlyActive) return
@@ -198,15 +171,7 @@ const IdeaSectionGeminiSparkIndex: React.FC = () => {
         >
           Spark Index
         </h2>
-        <p className="text-xl md:text-2xl text-purple-200 mb-8">Real-time, AI-driven leaderboard celebrating your creative brilliance.</p>
-
-        {/* Notion Link Button */}
-        <Button variant="outline" className="mb-8 border-orange-400/50 text-orange-300 hover:bg-orange-400/10 hover:text-orange-200" asChild>
-          <a href="https://www.notion.so/Spark-Index-20494b73a48480be85f9c5ac18d33c47?source=copy_link" target="_blank" rel="noopener noreferrer">
-            <FileText className="mr-2 h-4 w-4" />
-            View Text-Only Concept
-          </a>
-        </Button>
+        <p className="text-xl md:text-2xl text-purple-200 mb-8 md:mb-10">Real-time, AI-driven leaderboard celebrating your creative brilliance.</p>
 
         {/* Main Interactive Area: Spark Card & Live Categories */}
         <div className="grid md:grid-cols-2 gap-8 mb-8 w-full items-start">
@@ -312,10 +277,10 @@ const IdeaSectionGeminiSparkIndex: React.FC = () => {
               )}
               style={{ animationDelay: prefersReducedMotion ? "0s" : `${index * 0.2 + 0.6}s` }}
             >
-              <CardHeader className="p-4">
+              <CardHeader className="pb-2 pt-4">
                 <CardTitle className="text-xl text-purple-300">{panel.title}</CardTitle>
               </CardHeader>
-              <CardContent className="p-4 pt-0">
+              <CardContent className="pb-4">
                 <p className="text-neutral-200 text-sm leading-relaxed">{panel.content}</p>
               </CardContent>
             </Card>
@@ -323,9 +288,9 @@ const IdeaSectionGeminiSparkIndex: React.FC = () => {
         </div>
 
         {/* Social Proof */}
-        <Card className="bg-black/60 border-purple-500/30 p-4 shadow-lg w-full max-w-md">
-          <p className="text-pink-400 font-semibold text-sm">@DataDrivenDiva on LinkedIn:</p>
-          <p className="text-neutral-300 italic text-sm">
+        <Card className="bg-black/60 border-purple-500/30 p-3 text-xs shadow-lg w-full max-w-md">
+          <p className="text-pink-400 font-semibold">@DataDrivenDiva on LinkedIn:</p>
+          <p className="text-neutral-300 italic">
             "My Spark Index just hit 9.7! 📈 This AI-driven leaderboard is gamifying creativity like never before. My Google-official badges are social gold! #SparkIndex #GSHA2025"
           </p>
         </Card>
@@ -344,18 +309,6 @@ const IdeaSectionGeminiSparkIndex: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* Gemini AI Narration */}
-      {showGeminiNarration && (
-        <div
-          className={cn(
-            "absolute top-4 left-1/2 -translate-x-1/2 z-20 p-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-lg shadow-xl backdrop-blur-sm max-w-2xl animate-gemini-narration-fade-in"
-          )}
-        >
-          <p className="text-purple-200 font-semibold text-sm mb-1">Gemini AI Live Narration:</p>
-          <p className="text-white text-lg italic">{geminiNarration}</p>
-        </div>
-      )}
 
       <style jsx>{`
         .spark-index-bg {

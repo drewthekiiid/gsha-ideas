@@ -6,7 +6,7 @@ import { useAppContext } from "@/context/app-context"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Zap, Users, Megaphone, Sparkles, Target, Music, PartyPopper, Flame, FileText } from "lucide-react"
+import { Zap, Users, Megaphone, Sparkles, Target, Music, PartyPopper, Flame } from "lucide-react"
 
 const WILD_QUERIES = [
   "Pitch me the riskiest campaign you've ever dreamt up!",
@@ -30,28 +30,16 @@ const GEMINI_ROASTS = [
   "Flash mob energy: ACTIVATED! 🔥",
 ]
 
-// Add GEMINI_NARRATIONS constant
-const GEMINI_NARRATIONS = [
-  "The energy here is electric! Let's see some sparks fly!",
-  "I'm detecting some seriously disruptive ideas brewing.",
-  "This is where the magic happens, folks. Don't blink.",
-  "Get ready to have your minds blown. The firestarters are in the house!",
-  "Warning: May cause spontaneous outbreaks of genius.",
-]
-
 const IdeaSectionGeminiFireStarter: React.FC = () => {
-  const { isMuted, prefersReducedMotion, activeSection } = useAppContext();
-  const [chaosLevel, setChaosLevel] = useState(0);
-  const [activeGame, setActiveGame] = useState<string | null>(null);
-  const [currentQuery, setCurrentQuery] = useState("");
-  const [showGeminiRoast, setShowGeminiRoast] = useState(false);
-  const [currentRoast, setCurrentRoast] = useState("");
-  const [carnivalGames, setCarnivalGames] = useState(CARNIVAL_GAMES);
-  const [flashMobActive, setFlashMobActive] = useState(false);
-  const [tornadoActive, setTornadoActive] = useState(false);
-  // Add missing state variables for Gemini narration
-  const [geminiNarration, setGeminiNarration] = useState("");
-  const [showGeminiNarration, setShowGeminiNarration] = useState(false);
+  const { isMuted, prefersReducedMotion, activeSection } = useAppContext()
+  const [chaosLevel, setChaosLevel] = useState(0)
+  const [activeGame, setActiveGame] = useState<string | null>(null)
+  const [currentQuery, setCurrentQuery] = useState("")
+  const [showGeminiRoast, setShowGeminiRoast] = useState(false)
+  const [currentRoast, setCurrentRoast] = useState("")
+  const [carnivalGames, setCarnivalGames] = useState(CARNIVAL_GAMES)
+  const [flashMobActive, setFlashMobActive] = useState(false)
+  const [tornadoActive, setTornadoActive] = useState(false)
 
   const sectionRef = useRef<HTMLDivElement>(null)
   const isCurrentlyActive = activeSection === "gemini-firestarter"
@@ -91,21 +79,6 @@ const IdeaSectionGeminiFireStarter: React.FC = () => {
       setTornadoActive(false)
     }
   }, [isCurrentlyActive, prefersReducedMotion, isMuted])
-
-  // Add useEffect for Gemini AI narration
-  useEffect(() => {
-    if (!isCurrentlyActive) return;
-
-    const narrationInterval = setInterval(() => {
-      const randomNarration = GEMINI_NARRATIONS[Math.floor(Math.random() * GEMINI_NARRATIONS.length)];
-      setGeminiNarration(randomNarration);
-      setShowGeminiNarration(true);
-      
-      setTimeout(() => setShowGeminiNarration(false), 4000); // Narration visible for 4 seconds
-    }, 8000); // New narration every 8 seconds
-
-    return () => clearInterval(narrationInterval);
-  }, [isCurrentlyActive]);
 
   const handleJoinCarnival = (game: typeof CARNIVAL_GAMES[0]) => {
     if (prefersReducedMotion || !isCurrentlyActive) return
@@ -244,19 +217,11 @@ const IdeaSectionGeminiFireStarter: React.FC = () => {
             !prefersReducedMotion && isCurrentlyActive && !flashMobActive && "animate-title-carnival",
           )}
         >
-          FireStarter
+          Gemini FireStarter
         </h2>
-        <p className="text-xl md:text-2xl text-orange-200 mb-8">
+        <p className="text-xl md:text-2xl text-orange-200 mb-8 md:mb-10">
           Welcome to the marketing chaos carnival!
         </p>
-
-        {/* Notion Link Button */}
-        <Button variant="outline" className="mb-8 border-orange-400/50 text-orange-300 hover:bg-orange-400/10 hover:text-orange-200" asChild>
-          <a href="https://www.notion.so/FireStarter-20494b73a4848075baa1c03de353f17b?source=copy_link" target="_blank" rel="noopener noreferrer">
-            <FileText className="mr-2 h-4 w-4" />
-            View Text-Only Concept
-          </a>
-        </Button>
 
         {/* Chaos Level Meter */}
         <div className="mb-8 w-full max-w-md">
@@ -335,7 +300,7 @@ const IdeaSectionGeminiFireStarter: React.FC = () => {
         </div>
 
         {/* Social Proof */}
-        <Card className="bg-black/60 border-red-500/30 p-4 text-sm shadow-lg w-full max-w-md">
+        <Card className="bg-black/60 border-red-500/30 p-3 text-xs shadow-lg w-full max-w-md">
           <p className="text-red-400 font-semibold">@CarnivalChaos on X:</p>
           <p className="text-neutral-300 italic">
             "I survived FireStarter! My pitch became a meme, my search history a jingle, and I crowd-surfed marketers! 🎪🔥 #GSHA2025 #FireStarterChaos"
@@ -356,18 +321,6 @@ const IdeaSectionGeminiFireStarter: React.FC = () => {
               <p className="text-xs text-yellow-500">Gemini Roast:</p>
               {currentRoast}
             </div>
-          </div>
-        )}
-
-        {/* Gemini AI Narration */}
-        {showGeminiNarration && (
-          <div
-            className={cn(
-              "absolute top-4 left-1/2 -translate-x-1/2 z-20 p-4 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-400/50 rounded-lg shadow-xl backdrop-blur-sm max-w-2xl animate-gemini-narration-fade-in"
-            )}
-          >
-            <p className="text-purple-200 font-semibold text-sm mb-1">Gemini AI Live Narration:</p>
-            <p className="text-white text-lg italic">{geminiNarration}</p>
           </div>
         )}
       </div>

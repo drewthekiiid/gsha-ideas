@@ -42,6 +42,10 @@ const AnimatedSearchBar: React.FC<AnimatedSearchBarProps> = ({
     if (typeof Audio !== "undefined") {
       audioRef.current = new Audio("/sounds/keypress-subtle.mp3")
       audioRef.current.volume = 0.3
+      audioRef.current.addEventListener('error', () => {
+        // Silently handle missing audio file
+        audioRef.current = null
+      })
     }
   }, [])
 
@@ -69,7 +73,9 @@ const AnimatedSearchBar: React.FC<AnimatedSearchBarProps> = ({
         setTypedText(textToType.substring(0, charIndex + 1))
         if (audioRef.current && !isMuted) {
           audioRef.current.currentTime = 0
-          audioRef.current.play().catch(console.warn)
+          audioRef.current.play().catch(() => {
+            // Silently handle audio play errors
+          })
         }
         charIndex++
       } else {

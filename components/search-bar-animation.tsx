@@ -20,6 +20,10 @@ const SearchBarAnimation: React.FC<SearchBarAnimationProps> = ({ textToType, sta
     if (typeof Audio !== "undefined") {
       audioRef.current = new Audio("/sounds/keypress-subtle.mp3")
       audioRef.current.volume = 0.3
+      audioRef.current.addEventListener('error', () => {
+        // Silently handle missing audio file
+        audioRef.current = null
+      })
     }
   }, [])
 
@@ -45,7 +49,9 @@ const SearchBarAnimation: React.FC<SearchBarAnimationProps> = ({ textToType, sta
         setTypedText((prev) => prev + textToType[charIndex])
         if (audioRef.current && !isMuted) {
           audioRef.current.currentTime = 0
-          audioRef.current.play().catch((e) => console.warn("Typing audio play failed:", e))
+          audioRef.current.play().catch(() => {
+            // Silently handle audio play errors
+          })
         }
         charIndex++
       } else {

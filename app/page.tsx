@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import YourLogo from "@/components/your-logo"
 import MosaicLogo from "@/components/mosaic-logo"
-import SoundToggle from "@/components/sound-toggle"
+// import SoundToggle from "@/components/sound-toggle" // Removed
 import MotionToggle from "@/components/motion-toggle"
 import IntroAnimationOverlay from "@/components/intro-animation-overlay"
 import IdeaSectionGeminiInferno from "@/components/ideas/idea-section-gemini-inferno"
@@ -18,23 +18,23 @@ import HeroMenu from "@/components/hero-menu"
 import { AnimatePresence } from "framer-motion"
 
 const SECTIONS_CONFIG = [
-  { id: "gemini-data-inferno", name: "Gemini Data Inferno", component: IdeaSectionGeminiInferno, themeColor: "orange" },
+  { id: "gemini-data-inferno", name: "Data Inferno", component: IdeaSectionGeminiInferno, themeColor: "orange" },
   { id: "gemini-labyrinth", name: "Gemini Labyrinth", component: IdeaSectionGeminiLabyrinth, themeColor: "teal" },
   {
     id: "gemini-spark-index",
-    name: "Gemini Spark Index",
+    name: "Spark Index",
     component: IdeaSectionGeminiSparkIndex,
     themeColor: "purple",
   },
   {
     id: "gemini-firestarter",
-    name: "Gemini FireStarter",
+    name: "FireStarter",
     component: IdeaSectionGeminiFireStarter,
     themeColor: "yellow",
   },
   {
     id: "gemini-constellation",
-    name: "Gemini Constellation",
+    name: "Gemini Constellation: The Night Search Lit Up the Sky",
     component: IdeaSectionGeminiConstellation,
     themeColor: "indigo",
   },
@@ -120,7 +120,8 @@ export default function HomePage() {
     }
     if (
       !initialSectionSet &&
-      sectionRefs.current[FIRST_CONTENT_SECTION_ID]?.getBoundingClientRect().top < window.innerHeight * 0.5
+      sectionRefs.current[FIRST_CONTENT_SECTION_ID] &&
+      sectionRefs.current[FIRST_CONTENT_SECTION_ID]!.getBoundingClientRect().top < window.innerHeight * 0.5
     ) {
       setActiveSection(FIRST_CONTENT_SECTION_ID)
       const firstConfig = SECTIONS_CONFIG.find((s) => s.id === FIRST_CONTENT_SECTION_ID)
@@ -157,7 +158,7 @@ export default function HomePage() {
         </AnimatePresence>
 
         <div className="fixed top-4 right-4 md:top-6 md:right-6 z-[210] flex space-x-2">
-          <SoundToggle isMuted={isMuted} onToggle={handleToggleSound} />
+          {/* <SoundToggle isMuted={isMuted} onToggle={handleToggleSound} /> Removed */}
           <MotionToggle isReducedMotion={prefersReducedMotion} onToggle={handleToggleMotion} />
         </div>
 
@@ -192,7 +193,9 @@ export default function HomePage() {
               <div
                 id={sectionConfig.id}
                 key={sectionConfig.id}
-                ref={(el) => (sectionRefs.current[sectionConfig.id] = el)}
+                ref={(el) => {
+                  sectionRefs.current[sectionConfig.id] = el
+                }}
                 className="w-full" // Ensure sections take full width for scroll snapping
               >
                 <SectionComponent />
