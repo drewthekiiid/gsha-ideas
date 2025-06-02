@@ -25,12 +25,18 @@ jobs:
       - name: Build Next.js application
         run: npm run build # Changed from pnpm run build
 
+      - name: Create directory structure for subdirectory deployment
+        run: |
+          mkdir -p deploy/gsha2025
+          cp -r out/* deploy/gsha2025/
+          echo "wriiiter.drewthekiiid.com" > deploy/CNAME
+
       - name: Add .nojekyll file
-        run: touch ./out/.nojekyll # Prevents GitHub Pages from running Jekyll
+        run: touch ./deploy/.nojekyll # Prevents GitHub Pages from running Jekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./deploy
           cname: wriiiter.drewthekiiid.com
